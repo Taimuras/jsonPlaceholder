@@ -13,7 +13,7 @@ protocol SinglePhotoViewModelProtocol: BaseViewModelProtocol{
 }
 
 class SinglePhotoViewModel: SinglePhotoViewModelProtocol{
-    var view: BaseViewControllerProtocol?
+    weak var view: BaseViewControllerProtocol?
     
     let networkManager: NetworkManagerProtocol
     init(networkManager: NetworkManagerProtocol = NetworkManager()){

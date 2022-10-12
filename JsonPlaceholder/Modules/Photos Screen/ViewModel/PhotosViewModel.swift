@@ -23,7 +23,7 @@ class PhotosViewModel: NSObject, PhotosViewModelProtocol{
         self.networkManager = networkManager
     }
     
-    var view: BaseViewControllerProtocol?
+    weak var view: BaseViewControllerProtocol?
     var user: UserModel?
     var album: AlbumModel?
     private var photos: [PhotoModel] = [PhotoModel]()

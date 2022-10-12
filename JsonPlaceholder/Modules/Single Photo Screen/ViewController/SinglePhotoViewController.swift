@@ -97,6 +97,7 @@ class SinglePhotoViewController: BaseViewController{
     
     override func setupValues() {
         super.setupValues()
+        viewModel.view = self
         
         if let userName = user.name{
             userNameLabel.text = userName.capitalized
