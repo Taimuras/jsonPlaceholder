@@ -29,19 +29,18 @@ class PhotosViewController: BaseViewController{
     }()
     
     var user: UserModel
-    var albumId: Int
     var viewModel: PhotosViewModelProtocol
     
     init(
         user: UserModel,
-        albumId: Int,
+        album: AlbumModel,
         viewModel: PhotosViewModelProtocol = PhotosViewModel()
     ){
         self.user = user
-        self.albumId = albumId
         self.viewModel = viewModel
         super.init(navigationType: .photosScreen)
-        self.viewModel.albumId = albumId
+        self.viewModel.album = album
+        self.viewModel.user = user
     }
     
     required init?(coder: NSCoder) {

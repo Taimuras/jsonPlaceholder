@@ -11,6 +11,7 @@ enum NavigationType{
     case usersScreen
     case albumsScreen
     case photosScreen
+    case signlePhotoScreen
 }
 
 extension NavigationType{
@@ -19,6 +20,7 @@ extension NavigationType{
         case .usersScreen: return "Users Screen"
         case .albumsScreen: return "Albums Screen"
         case .photosScreen: return "Photos Screen"
+        case .signlePhotoScreen: return "Single Photo Screen"
         }
     }
 }

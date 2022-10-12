@@ -78,10 +78,9 @@ extension AlbumsViewModel: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard let id = albums[indexPath.row].id,
-              let user = user
-        else {return}
-        let vc = PhotosViewController(user: user, albumId: id)
+        guard let user = user else {return}
+        let album = albums[indexPath.row]
+        let vc = PhotosViewController(user: user, album: album)
         self.view?.push(vc: vc)
     }
 }

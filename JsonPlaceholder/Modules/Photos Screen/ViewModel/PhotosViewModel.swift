@@ -8,7 +8,8 @@
 import UIKit
 
 protocol PhotosViewModelProtocol: BaseViewModelProtocol, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
-    var albumId: Int? { get set }
+    var user: UserModel? { get set }
+    var album: AlbumModel? { get set }
     var isLoadingComp: BoolCompletion? { get set }
     
     func reloadData()
@@ -23,7 +24,8 @@ class PhotosViewModel: NSObject, PhotosViewModelProtocol{
     }
     
     var view: BaseViewControllerProtocol?
-    var albumId: Int?
+    var user: UserModel?
+    var album: AlbumModel?
     private var photos: [PhotoModel] = [PhotoModel]()
     var isLoadingComp: BoolCompletion?
     var isLoading: Bool = true
@@ -53,7 +55,7 @@ class PhotosViewModel: NSObject, PhotosViewModelProtocol{
     }
     
     func getAllImages() {
-        guard let albumId = albumId else {return}
+        guard let albumId = album?.id else {return}
         loadingState(is: true)
         reloadData()
         networkManager.getAllImages(id: albumId) { [weak self] (photos) in
@@ -96,7 +98,13 @@ extension PhotosViewModel{
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(photos[indexPath.row])
+        guard let user = user,
+              let album = album
+        else {return}
+        let photo = photos[indexPath.row]
+        
+        let vc = SinglePhotoViewController(user: user, album: album, photo: photo)
+        self.view?.push(vc: vc)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
