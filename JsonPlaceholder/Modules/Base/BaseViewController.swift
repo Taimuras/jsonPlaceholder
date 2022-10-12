@@ -17,8 +17,19 @@ class BaseViewController: UIViewController{
         return ai
     }()
     
-    lazy var navigationView = NavigationView(type: .usersScreen) { [ weak self ] in
+    lazy var navigationView = NavigationView(type: navigationType) { [ weak self ] in
         self?.popBackViewController()
+    }
+    
+    private var navigationType: NavigationType
+    
+    init(navigationType: NavigationType){
+        self.navigationType = navigationType
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {

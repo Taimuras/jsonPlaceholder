@@ -25,10 +25,10 @@ class UsersScreenViewController: BaseViewController{
         return rc
     }()
     
-    var viewModel: UsersScreenViewModelProtocol
-    init(viewModel: UsersScreenViewModelProtocol = UsersScreenViewModel()){
+    var viewModel: BaseTableViewViewModelProtocol
+    init(viewModel: BaseTableViewViewModelProtocol = UsersScreenViewModel()){
         self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
+        super.init(navigationType: .usersScreen)
     }
     
     required init?(coder: NSCoder) {
@@ -69,10 +69,10 @@ class UsersScreenViewController: BaseViewController{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.getAllUser()
+        viewModel.getData()
     }
     
     @objc private func refresh() {
-        viewModel.getAllUser()
+        viewModel.getData()
     }
 }

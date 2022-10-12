@@ -24,5 +24,6 @@ class BaseLabel: UILabel{
         textAlignment = type.textAlignment
         textColor = type.textColor
         font = type.font
+        numberOfLines = type.numberOfLines
     }
 }

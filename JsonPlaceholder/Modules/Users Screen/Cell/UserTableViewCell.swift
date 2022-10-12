@@ -99,11 +99,10 @@ class UserTableViewCell: UITableViewCell{
     private func iconStackViewSetup(){
         iconsStackView.translatesAutoresizingMaskIntoConstraints = false
         let constraints = [
-            iconsStackView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor, constant: 16),
+            iconsStackView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor, constant: 10),
             iconsStackView.topAnchor.constraint(equalTo: mainView.topAnchor, constant: 6),
             iconsStackView.bottomAnchor.constraint(equalTo: mainView.bottomAnchor, constant: -6),
-            iconsStackView.widthAnchor.constraint(equalToConstant: 20),
-            emailImageView.heightAnchor.constraint(equalToConstant: 20)
+            iconsStackView.widthAnchor.constraint(equalToConstant: 20)
         ]
         NSLayoutConstraint.activate(constraints)
         
@@ -116,8 +115,7 @@ class UserTableViewCell: UITableViewCell{
             labelsStackView.leadingAnchor.constraint(equalTo: iconsStackView.trailingAnchor, constant: 10),
             labelsStackView.topAnchor.constraint(equalTo: mainView.topAnchor, constant: 6),
             labelsStackView.bottomAnchor.constraint(equalTo: mainView.bottomAnchor, constant: -6),
-            labelsStackView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor, constant: -16),
-            emailLabel.heightAnchor.constraint(equalToConstant: 20)
+            labelsStackView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor, constant: -16)
         ]
         NSLayoutConstraint.activate(constraints)
         

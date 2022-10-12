@@ -12,4 +12,5 @@ extension UIImage{
     static let addressIconImage = UIImage(named: "address_icon")
     static let emailIconImage = UIImage(named: "email_icon")
     static let personIconImage = UIImage(named: "person_icon")
+    static let placeHolderImage = UIImage(systemName: "globe")
 }

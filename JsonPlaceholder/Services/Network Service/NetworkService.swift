@@ -9,16 +9,25 @@ import Foundation
 
 enum NetworkService{
     case getAllUsers
+    case getAllAlbums(id: Int)
+    case getAllImages(id: Int)
+    case getSingleImage(urlString: String)
 }
 
 extension NetworkService: Service{
     var baseURL: String {
-        return "https://jsonplaceholder.typicode.com"
+        switch self{
+        case .getSingleImage(let urlString): return "\(urlString)"
+        default: return "https://jsonplaceholder.typicode.com"
+        }
     }
     
     var path: String {
         switch self {
         case .getAllUsers: return "/users"
+        case .getAllAlbums(let id): return "/users/\(id)/albums"
+        case .getAllImages(let id): return "/albums/\(id)/photos"
+        case .getSingleImage: return ""
         }
     }
     

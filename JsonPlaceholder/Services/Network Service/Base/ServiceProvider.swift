@@ -16,8 +16,8 @@ enum Result<T> {
 class ServiceProvider<T: Service> {
     var urlSession = URLSession.shared
     
-    func loadData(service: T, completion: @escaping (Result<Data>) -> Void) {
-        call(service.urlRequest, completion: completion)
+    func loadImage(urlString: String, completion: @escaping (Result<Data>) -> Void){
+        imageCall(url: urlString, completion: completion)
     }
     
     func load<U>(service: T, decodeType: U.Type, completion: @escaping (Result<U>) -> Void) where U: Decodable {
@@ -44,9 +44,26 @@ class ServiceProvider<T: Service> {
 extension ServiceProvider {
     private func call(_ request: URLRequest, deliverQueue: DispatchQueue = DispatchQueue.main, completion: @escaping (Result<Data>) -> Void) {
         urlSession.dataTask(with: request) { (data, response, error) in
-            
-//            print("Response: \(response)")
-            
+            if error != nil {
+                deliverQueue.async {
+                    completion(.failure(.oopsSomethingWentWrong))
+                }
+            } else if let data = data {
+                deliverQueue.async {
+                    completion(.success(data))
+                }
+            } else {
+                deliverQueue.async {
+                    completion(.empty)
+                }
+            }
+        }.resume()
+    }
+    
+    private func imageCall(url: String, deliverQueue: DispatchQueue = DispatchQueue.main, completion: @escaping (Result<Data>) -> Void){
+        let url = URL(string: url)
+        guard let url = url else {return}
+        urlSession.dataTask(with: url) { (data, response, error) in
             if error != nil {
                 deliverQueue.async {
                     completion(.failure(.oopsSomethingWentWrong))

@@ -7,26 +7,18 @@
 
 import UIKit
 
-protocol UsersScreenViewModelProtocol: BaseViewModelProtocol, UITableViewDataSource, UITableViewDelegate{
-    var isLoadingComp: BoolCompletion? { get set }
-    func getAllUser()
-    func registerTableView(_ tableView: UITableView)
-    func reloadData()
-}
-
-
-class UsersScreenViewModel: NSObject, UsersScreenViewModelProtocol{
+class UsersScreenViewModel: NSObject, BaseTableViewViewModelProtocol{
     var networkManager: NetworkManagerProtocol
     init(networkManager: NetworkManagerProtocol = NetworkManager()){
         self.networkManager = networkManager
     }
-    var view: BaseViewControllerProtocol?
+    weak var view: BaseViewControllerProtocol?
     private var tableView: UITableView?
     var users: [UserModel] = [UserModel]()
     var isLoadingComp: BoolCompletion?
     var isLoading: Bool = true
     
-    func getAllUser(){
+    func getData(){
         loadingState(is: true)
         networkManager.getAllUsers { [weak self] (users) in
             self?.users = users
@@ -54,6 +46,10 @@ class UsersScreenViewModel: NSObject, UsersScreenViewModelProtocol{
     private func loadingState(is loading: Bool){
         isLoading = loading
         isLoadingComp?(loading)
+        if loading{
+            users.removeAll()
+            reloadData()
+        }
     }
 }
 
@@ -75,5 +71,15 @@ extension UsersScreenViewModel: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        if !isLoading{
+            let user = users[indexPath.row]
+            
+            if let userName = user.name{
+                DSGenerator.userDefaultsInstance.setCurrentUser(userName)
+            }
+            
+            let vc = AlbumsViewController(user: user)
+            self.view?.push(vc: vc)
+        }
     }
 }
